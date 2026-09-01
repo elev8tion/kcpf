@@ -24,9 +24,9 @@ export default function Home() {
           streakOpacity={0.6}
           tileOpacity={0.9}
           fov={75}
-          hue={0}
-          saturation={1.0}
-          brightness={1.0}
+          hue={22}
+          saturation={1.05}
+          brightness={0.95}
         />
       </div>
 
