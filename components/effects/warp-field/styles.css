@@ -1,6 +1,15 @@
 /* Local host styles for the Warp Field effect (ported from Traevu).
    The component needs a sized, overflow-controlled parent. */
 
+/* Frame shell — mirrors the Traevu docs' `.shader-frame` consumer pattern
+   (Traevu's own CSS leaves it unstyled; the consumer provides sizing). */
+.shader-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 .traevu-background.warp-field {
   position: absolute;
   inset: 0;

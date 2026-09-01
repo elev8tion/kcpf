@@ -13,12 +13,21 @@ const FOOTER_LINKS = [
 export default function Home() {
   return (
     <main className="relative min-h-screen w-full">
-      {/* Background — Warp Field (ported from verified Traevu source, Three.js r128) */}
+      {/* Background — Warp Field, hyperspace variant (verified Traevu source, Three.js r128) */}
       <div
         aria-hidden
-        className="fixed inset-0 z-0 overflow-hidden bg-[color:var(--page)]"
+        className="shader-frame fixed inset-0 z-0 overflow-hidden bg-[color:var(--page)]"
       >
-        <WarpFieldBackground />
+        <WarpFieldBackground
+          variant="hyperspace"
+          speed={15.0}
+          streakOpacity={0.6}
+          tileOpacity={0.9}
+          fov={75}
+          hue={0}
+          saturation={1.0}
+          brightness={1.0}
+        />
       </div>
 
       {/* Content */}
