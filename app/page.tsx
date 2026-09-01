@@ -14,19 +14,16 @@ export default function Home() {
   return (
     <main className="relative min-h-screen w-full">
       {/* Background — Warp Field, hyperspace variant (verified Traevu source, Three.js r128) */}
-      <div
-        aria-hidden
-        className="shader-frame fixed inset-0 z-0 overflow-hidden bg-[color:var(--page)]"
-      >
+      <div aria-hidden className="warp-field-backdrop">
         <WarpFieldBackground
           variant="hyperspace"
           speed={15.0}
-          streakOpacity={0.6}
-          tileOpacity={0.9}
+          streakOpacity={0.85}
+          tileOpacity={1.0}
           fov={75}
           hue={22}
           saturation={1.05}
-          brightness={0.95}
+          brightness={1.1}
         />
       </div>
 
