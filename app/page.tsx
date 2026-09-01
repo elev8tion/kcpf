@@ -1,4 +1,4 @@
-import { Backdrop } from "@/components/traevu";
+import { WarpFieldBackground } from "@/components/effects/warp-field/WarpFieldBackground";
 import Hero from "@/components/sections/Hero";
 import Projects from "@/components/sections/Projects";
 import Skills from "@/components/sections/Skills";
@@ -13,8 +13,13 @@ const FOOTER_LINKS = [
 export default function Home() {
   return (
     <main className="relative min-h-screen w-full">
-      {/* Background */}
-      <Backdrop />
+      {/* Background — Warp Field (ported from verified Traevu source, Three.js r128) */}
+      <div
+        aria-hidden
+        className="fixed inset-0 z-0 overflow-hidden bg-[color:var(--page)]"
+      >
+        <WarpFieldBackground />
+      </div>
 
       {/* Content */}
       <div className="relative z-10">
