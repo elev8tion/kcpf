@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { GlassCard } from "../glass/GlassContainer";
+import { Chip, EASE_OUT, SectionHeading } from "../traevu";
 import ProjectModal from "./ProjectModal";
 
 export interface Project {
@@ -75,88 +75,74 @@ export default function Projects() {
   const [selected, setSelected] = useState<Project | null>(null);
 
   return (
-    <section id="projects" className="min-h-screen py-20 px-6 md:px-12">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Featured Projects
-          </h2>
-          <p className="text-xl text-white/60">
-            Building the future with AI and modern frameworks
-          </p>
-        </motion.div>
+    <section id="projects" className="px-6 py-20 md:px-12">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          kicker="Featured Work"
+          title="Featured Projects"
+          lede="Building the future with AI and modern frameworks"
+        />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
-            <motion.div
+            <motion.button
               key={project.title}
-              initial={{ opacity: 0, y: 50 }}
+              type="button"
+              onClick={() => setSelected(project)}
+              initial={{ opacity: 0, y: 6 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="cursor-pointer"
-              onClick={() => setSelected(project)}
+              transition={{
+                duration: 0.36,
+                delay: Math.min(index * 0.035, 0.42),
+                ease: [...EASE_OUT],
+              }}
+              className="t-card flex cursor-pointer flex-col"
             >
-              <GlassCard
-                className="h-full flex flex-col"
-                variant="frosted"
-                animation="shimmer"
-                interactive={true}
-                ripple={true}
-              >
-                {project.image && (
-                  <div className="relative -mx-5 -mt-5 mb-5 overflow-hidden rounded-t-2xl border-b border-white/10">
-                    <img
-                      src={project.image}
-                      alt={`${project.title} demo`}
-                      className="w-full h-44 object-cover object-top"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  </div>
-                )}
-                <h3 className="text-2xl font-semibold text-white mb-3">
+              {project.image && (
+                <div className="t-card-media m-1.5 mb-0">
+                  <img
+                    src={project.image}
+                    alt={`${project.title} demo`}
+                    loading="lazy"
+                  />
+                </div>
+              )}
+
+              <div className="flex flex-grow flex-col gap-2.5 px-3.5 pb-3.5 pt-3">
+                <h3 className="flex items-center gap-2 text-[13px]">
+                  <span className="t-statusdot" aria-hidden="true" />
                   {project.title}
                 </h3>
-                <p className="text-white/70 mb-4 flex-grow">
+
+                <p className="flex-grow text-[12px] leading-[20px] text-brand-muted">
                   {project.description}
                 </p>
 
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-1.5">
                   {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 text-xs rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/30"
-                    >
-                      {tag}
-                    </span>
+                    <Chip key={tag}>{tag}</Chip>
                   ))}
                 </div>
 
-                <ul className="space-y-2 mb-5">
+                <ul className="space-y-1.5">
                   {project.features.map((feature) => (
                     <li
                       key={feature}
-                      className="flex items-center gap-2 text-sm text-white/60"
+                      className="flex items-center gap-2 text-[12px] leading-[18px] text-brand-muted"
                     >
-                      <span className="text-indigo-400">✓</span>
+                      <span className="t-statusdot" aria-hidden="true" />
                       {feature}
                     </li>
                   ))}
                 </ul>
 
-                <span className="mt-auto inline-flex items-center gap-2 text-sm font-medium text-indigo-300">
+                <span className="mt-auto inline-flex items-center gap-1.5 pt-1 text-[12px] text-brand-accent">
                   See it in action
-                  <span aria-hidden>→</span>
+                  <span aria-hidden="true">→</span>
                 </span>
-              </GlassCard>
-            </motion.div>
+              </div>
+            </motion.button>
           ))}
         </div>
       </div>

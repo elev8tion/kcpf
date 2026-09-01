@@ -10,20 +10,23 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // elev8tion brand colors (we'll extract from logos)
+        // Traevu-derived token system — mapped to the CSS vars defined in app/globals.css (C-001).
+        // Palette constraint: keep the existing black/dark surfaces and indigo accent.
         brand: {
-          primary: "#6366F1",   // Indigo from logo
-          secondary: "#4650E",  // Deep blue
-          accent: "#B5B8D0",    // Light purple-gray
-          dark: "#1a1a2e",      // Dark background
+          accent: "var(--accent)",
+          page: "var(--page)",
+          wall: "var(--wall)",
+          surface: "var(--surface)",
+          content: "var(--content-bg)",
+          muted: "var(--foreground-muted)",
         },
       },
       borderRadius: {
-        DEFAULT: "24px",  // Your 24px standard
-        glass: "24px",
-      },
-      backdropBlur: {
-        glass: "20px",
+        xs: "4px",
+        sm: "5px",
+        md: "7px",
+        lg: "9px",
+        xl: "14px",
       },
     },
   },

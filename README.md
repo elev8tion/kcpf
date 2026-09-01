@@ -1,18 +1,24 @@
 # KC Portfolio - elev8tion
 
-Modern, glass-morphism portfolio built with Next.js, TypeScript, and Framer Motion.
+Modern portfolio built with Next.js, TypeScript, and Framer Motion.
 
-## 🎨 Design Features
+## 🎨 Design Language
 
-- **Midnight Mist Background** - Beautiful gradient effect
-- **Glass Morphism** - Converted from Flutter glass components
-- **24px Border Radius** - Consistent throughout
-- **Framer Motion Animations** - Smooth scroll-triggered animations
-- **Responsive Design** - Mobile-first approach
+The UI is built on a Traevu-derived token system defined entirely in `app/globals.css`:
+
+- **Token system** — CSS custom properties on `:root` (`--page`, `--wall`, `--surface`, `--accent`, `--border`, etc.) mapped into Tailwind via `tailwind.config.ts` (`brand.*` colors, Traevu radius scale 4–14px)
+- **Typography** — JetBrains Mono (`next/font/google`) at a 14px/22px base, weight-400 negatively-tracked headings, uppercase mono microlabels
+- **Hairline surfaces** — 0.5px borders, indigo-tinted dark surfaces, component classes (`.t-btn`, `.t-chip`, `.t-panel`, `.t-input`, `.t-dialog`, …)
+- **Accent** — Indigo `#6366F1` on a pure black page with a subtle radial glow backdrop
+- **Motion** — Shared easing curves (`--ease-out`, `--ease-sheet`) with a `prefers-reduced-motion` kill-switch
+
+> The previous liquid-glass layer (`components/glass/`, `styles/liquid-glass.css`,
+> `components/backgrounds/MidnightMist.tsx`) has been removed in favor of this
+> flat, token-driven design language.
 
 ## 🚀 Tech Stack
 
-- Next.js 14
+- Next.js 16 (App Router)
 - TypeScript
 - Tailwind CSS
 - Framer Motion
@@ -21,20 +27,18 @@ Modern, glass-morphism portfolio built with Next.js, TypeScript, and Framer Moti
 ## 📦 Project Structure
 
 ```
-kc_pf/
+kc_portfolio/
 ├── app/
-│   ├── layout.tsx          # Root layout
-│   ├── page.tsx            # Homepage
-│   └── globals.css         # Global styles
+│   ├── layout.tsx          # Root layout (JetBrains Mono font)
+│   ├── page.tsx            # Homepage composition
+│   └── globals.css         # Design tokens + .t-* component classes
 ├── components/
-│   ├── backgrounds/
-│   │   └── MidnightMist.tsx
-│   ├── glass/
-│   │   ├── GlassContainer.tsx
-│   │   └── GlassButton.tsx
+│   ├── traevu/
+│   │   └── index.tsx       # Shared UI primitives (Button, Chip, Panel, Backdrop, ...)
 │   └── sections/
 │       ├── Hero.tsx
 │       ├── Projects.tsx
+│       ├── ProjectModal.tsx
 │       ├── Skills.tsx
 │       └── Contact.tsx
 └── public/
@@ -43,10 +47,12 @@ kc_pf/
 
 ## 🎯 Brand Colors (elev8tion)
 
-- Primary: `#6366F1` (Indigo)
-- Secondary: `#4650E` (Deep Blue)
-- Accent: `#B5B8D0` (Light Purple-Gray)
-- Dark: `#1a1a2e` (Background)
+- Primary / Accent: `#6366F1` (Indigo)
+- Background: `#000000` (Page) over indigo-tinted darks (`#0a0a0f`, `#121218`, `#17171f`)
+- Status: `#58c68a` (OK green)
+
+All colors flow through the CSS token layer in `app/globals.css`; update them
+there (or via the `brand.*` mapping in `tailwind.config.ts`).
 
 ## 🛠️ Development
 
@@ -76,8 +82,8 @@ Edit the sections in `components/sections/`:
 - `Skills.tsx` - Your tech stack
 - `Contact.tsx` - Contact info & social links
 
-### Brand Colors
-Update colors in `tailwind.config.ts`
+### Design Tokens
+Update colors, radii, and easing in `app/globals.css`
 
 ## 🌐 Deployment
 
@@ -98,7 +104,7 @@ Or push to GitHub and connect to Vercel dashboard.
 - ✅ SEO Optimized
 - ✅ Fast Performance
 - ✅ Mobile Responsive
-- ✅ Glass Morphism UI
+- ✅ Traevu-Derived Token UI
 - ✅ Smooth Animations
 - ✅ Dark Theme
 - ✅ TypeScript

@@ -1,106 +1,126 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import GlassContainer from "../glass/GlassContainer";
-import GlassButton from "../glass/GlassButton";
+import { Button, EASE_OUT, Panel, SectionHeading } from "../traevu";
 
 export default function Contact() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [details, setDetails] = useState("");
+
+  // Honest submit: compose a real mailto draft from the field values.
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(
+      `Project inquiry from ${name || "your portfolio"}`,
+    );
+    const body = encodeURIComponent(
+      `${details}\n\n— ${name}\n${email}`,
+    );
+    window.location.href = `mailto:your@email.com?subject=${subject}&body=${body}`;
+  };
+
   return (
-    <section id="contact" className="min-h-screen flex items-center justify-center py-20 px-6 md:px-12">
-      <div className="max-w-4xl w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Let's Build Something Amazing
-          </h2>
-          <p className="text-xl text-white/60">
-            Ready to elevate your project with cutting-edge technology?
-          </p>
-        </motion.div>
+    <section
+      id="contact"
+      className="flex min-h-screen items-center justify-center px-6 py-20 md:px-12"
+    >
+      <div className="w-full max-w-4xl">
+        <SectionHeading
+          kicker="Contact"
+          title="Let's Build Something Amazing"
+          lede="Ready to elevate your project with cutting-edge technology?"
+        />
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 6 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.6 }}
+          transition={{ duration: 0.36, ease: [...EASE_OUT] }}
         >
-          <GlassContainer
-            className="p-8 md:p-12"
-            variant="gradient-cyan"
-            animation="glow"
-            interactive={true}
-          >
-            <div className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
+          <Panel className="p-6 md:p-8">
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid gap-5 md:grid-cols-2">
                 <div>
-                  <label className="block text-white/80 mb-2">Name</label>
+                  <label
+                    htmlFor="contact-name"
+                    className="mb-2 block text-[11px] text-brand-muted"
+                  >
+                    Name
+                  </label>
                   <input
+                    id="contact-name"
                     type="text"
-                    className="w-full px-4 py-3 rounded-[16px] bg-white/5 border border-white/10 text-white focus:border-indigo-400/50 focus:outline-none transition-colors"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="t-input"
                     placeholder="Your name"
+                    autoComplete="name"
                   />
                 </div>
                 <div>
-                  <label className="block text-white/80 mb-2">Email</label>
+                  <label
+                    htmlFor="contact-email"
+                    className="mb-2 block text-[11px] text-brand-muted"
+                  >
+                    Email
+                  </label>
                   <input
+                    id="contact-email"
                     type="email"
-                    className="w-full px-4 py-3 rounded-[16px] bg-white/5 border border-white/10 text-white focus:border-indigo-400/50 focus:outline-none transition-colors"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="t-input"
                     placeholder="your@email.com"
+                    autoComplete="email"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-white/80 mb-2">Project Details</label>
+                <label
+                  htmlFor="contact-details"
+                  className="mb-2 block text-[11px] text-brand-muted"
+                >
+                  Project Details
+                </label>
                 <textarea
+                  id="contact-details"
                   rows={6}
-                  className="w-full px-4 py-3 rounded-[16px] bg-white/5 border border-white/10 text-white focus:border-indigo-400/50 focus:outline-none transition-colors resize-none"
+                  value={details}
+                  onChange={(e) => setDetails(e.target.value)}
+                  className="t-input"
                   placeholder="Tell me about your project..."
                 />
               </div>
 
-              <div className="flex justify-center pt-4">
-                <GlassButton
-                  variant="gradient-blue"
-                  size="lg"
-                  glow={true}
-                  ripple={true}
-                  icon={<span>📨</span>}
-                  iconPosition="right"
-                  fullWidth={false}
-                >
+              <div className="pt-1">
+                <Button variant="primary" size="lg" type="submit">
                   Send Message
-                </GlassButton>
+                </Button>
               </div>
-            </div>
-          </GlassContainer>
+            </form>
+          </Panel>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          className="text-center mt-12 space-y-4"
+          transition={{ duration: 0.36, delay: 0.08, ease: [...EASE_OUT] }}
+          className="mt-10 space-y-3"
         >
-          <p className="text-white/60">Or reach out directly:</p>
-          <div className="flex justify-center gap-6">
-            <a
-              href="mailto:your@email.com"
-              className="text-indigo-400 hover:text-indigo-300 transition-colors"
-            >
+          <p className="text-[12px] text-brand-muted">Or reach out directly:</p>
+          <div className="flex gap-6">
+            <a href="mailto:your@email.com" className="t-link text-[12px]">
               Email
             </a>
             <a
               href="https://github.com/yourusername"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-indigo-400 hover:text-indigo-300 transition-colors"
+              className="t-link text-[12px]"
             >
               GitHub
             </a>
@@ -108,7 +128,7 @@ export default function Contact() {
               href="https://linkedin.com/in/yourprofile"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-indigo-400 hover:text-indigo-300 transition-colors"
+              className="t-link text-[12px]"
             >
               LinkedIn
             </a>

@@ -1,84 +1,124 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GlassPanel } from "../glass/GlassContainer";
+import { EASE_OUT, Panel, SectionHeading } from "../traevu";
 
-const skills = {
-  "Mobile Development": [
-    "Flutter",
-    "React Native",
-    "iOS (Swift)",
-    "Android (Kotlin)",
-  ],
-  "Web Development": [
-    "React",
-    "Next.js",
-    "TypeScript",
-    "Tailwind CSS",
-  ],
-  "AI/ML": [
-    "TensorFlow Lite",
-    "ML Kit",
-    "On-device AI",
-    "LLM Integration",
-  ],
-  "Backend & Cloud": [
-    "Node.js",
-    "FastAPI",
-    "Firebase",
-    "AWS/GCP",
-  ],
+function PhoneIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="4.5" y="1.5" width="7" height="13" rx="1.5" />
+      <path d="M7 12.5h2" />
+    </svg>
+  );
+}
+
+function GlobeIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <circle cx="8" cy="8" r="6.5" />
+      <path d="M1.5 8h13M8 1.5c-4.5 4-4.5 9 0 13M8 1.5c4.5 4 4.5 9 0 13" />
+    </svg>
+  );
+}
+
+function ChipIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <rect x="4.5" y="4.5" width="7" height="7" rx="1" />
+      <path d="M6.5 1.5v3M9.5 1.5v3M6.5 11.5v3M9.5 11.5v3M1.5 6.5h3M1.5 9.5h3M11.5 6.5h3M11.5 9.5h3" />
+    </svg>
+  );
+}
+
+function CloudIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M4.5 12.5a3 3 0 0 1-.4-5.97 4 4 0 0 1 7.8-.7 2.75 2.75 0 0 1-.4 5.47z" />
+    </svg>
+  );
+}
+
+const skills: Record<string, { items: string[]; icon: JSX.Element }> = {
+  "Mobile Development": {
+    items: ["Flutter", "React Native", "iOS (Swift)", "Android (Kotlin)"],
+    icon: <PhoneIcon />,
+  },
+  "Web Development": {
+    items: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+    icon: <GlobeIcon />,
+  },
+  "AI/ML": {
+    items: ["TensorFlow Lite", "ML Kit", "On-device AI", "LLM Integration"],
+    icon: <ChipIcon />,
+  },
+  "Backend & Cloud": {
+    items: ["Node.js", "FastAPI", "Firebase", "AWS/GCP"],
+    icon: <CloudIcon />,
+  },
 };
 
 export default function Skills() {
   return (
-    <section className="py-20 px-6 md:px-12">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Skills & Technologies
-          </h2>
-          <p className="text-xl text-white/60">
-            Tools I use to bring ideas to life
-          </p>
-        </motion.div>
+    <section className="px-6 py-20 md:px-12">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          kicker="Capabilities"
+          title="Skills & Technologies"
+          lede="Tools I use to bring ideas to life"
+        />
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {Object.entries(skills).map(([category, items], index) => (
+        <div className="grid gap-3 md:grid-cols-2">
+          {Object.entries(skills).map(([category, { items, icon }], index) => (
             <motion.div
               key={category}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 6 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
+              transition={{
+                duration: 0.36,
+                delay: Math.min(index * 0.035, 0.42),
+                ease: [...EASE_OUT],
+              }}
             >
-              <GlassPanel
-                title={category}
-                variant="frosted"
-                animation="glow"
-                icon={
-                  index === 0 ? "📱" :
-                  index === 1 ? "🌐" :
-                  index === 2 ? "🤖" : "☁️"
-                }
-              >
-                <div className="grid grid-cols-2 gap-3">
+              <Panel label={category} icon={icon}>
+                <div className="grid grid-cols-2 gap-1.5 p-3.5">
                   {items.map((skill) => (
-                    <div
-                      key={skill}
-                      className="px-4 py-2 rounded-[16px] bg-white/5 border border-white/10 text-white/80 text-center hover:bg-white/10 hover:border-white/20 transition-all duration-300"
-                    >
+                    <span key={skill} className="t-chip">
                       {skill}
-                    </div>
+                    </span>
                   ))}
                 </div>
-              </GlassPanel>
+              </Panel>
             </motion.div>
           ))}
         </div>

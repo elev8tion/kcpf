@@ -1,74 +1,58 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
-import GlassContainer from "../glass/GlassContainer";
-import GlassButton from "../glass/GlassButton";
+import { Button, EASE_OUT } from "../traevu";
+
+function ArrowRightIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" />
+    </svg>
+  );
+}
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 md:px-12">
+    <section className="flex min-h-screen items-center justify-center px-6 md:px-12">
       <motion.div
-        className="max-w-6xl w-full grid md:grid-cols-2 gap-12 items-center"
-        initial={{ opacity: 0, y: 50 }}
+        className="grid w-full max-w-6xl items-center gap-12 md:grid-cols-2"
+        initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.36, ease: [...EASE_OUT] }}
       >
-        {/* Left: Text Content */}
+        {/* Left: doc-intro column */}
         <div className="space-y-6">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="mb-6"
-          >
-            {/* Vector emblem — trimmed to content, crisp at any size.
-                Swap for a wide lockup at /logos/brand.png to display 200×60. */}
-            <img
-              src="/logos/brand-dark.svg"
-              alt="elev8tion"
-              width={160}
-              height={124}
-            />
-          </motion.div>
+          <p className="t-microlabel">Full-Stack Development</p>
 
-          <motion.h1
-            className="text-5xl md:text-7xl font-bold text-white"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-          >
+          {/* Vector emblem — trimmed to content, crisp at any size.
+              Swap for a wide lockup at /logos/brand.png to display 200×60. */}
+          <img src="/logos/brand-dark.svg" alt="elev8tion" width={160} height={124} />
+
+          <h1 className="text-[clamp(26px,4vw,40px)] leading-[1.3]">
             Full-Stack Developer
             <br />
-            <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-              AI Engineer
-            </span>
-          </motion.h1>
+            <span className="text-brand-accent">AI Engineer</span>
+          </h1>
 
-          <motion.p
-            className="text-xl text-white/70 max-w-lg"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-          >
+          <p className="max-w-lg text-brand-muted">
             Building intelligent solutions with Flutter, React, and cutting-edge
             AI/ML technologies. Specialized in on-device AI and cloud
             architecture.
-          </motion.p>
+          </p>
 
-          <motion.div
-            className="flex gap-4 pt-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-          >
-            <GlassButton
-              variant="gradient-blue"
+          <div className="flex gap-3 pt-2">
+            <Button
+              variant="primary"
               size="lg"
-              glow={true}
-              ripple={true}
-              icon={<span>🚀</span>}
-              iconPosition="left"
+              icon={<ArrowRightIcon />}
               onClick={() =>
                 document
                   .getElementById("projects")
@@ -76,13 +60,9 @@ export default function Hero() {
               }
             >
               View Projects
-            </GlassButton>
-            <GlassButton
-              variant="outline"
+            </Button>
+            <Button
               size="lg"
-              ripple={true}
-              icon={<span>✉️</span>}
-              iconPosition="left"
               onClick={() =>
                 document
                   .getElementById("contact")
@@ -90,27 +70,24 @@ export default function Hero() {
               }
             >
               Contact Me
-            </GlassButton>
-          </motion.div>
+            </Button>
+          </div>
         </div>
 
-        {/* Right: Profile Image with Glass Effect */}
+        {/* Right: portrait in a hairline surface card.
+            Photo rendered as a CSS background with an interception overlay:
+            blocks right-click save, drag-out, and long-press callout. */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.36, delay: 0.08, ease: [...EASE_OUT] }}
           className="flex justify-center"
         >
-          <div onContextMenu={(e) => e.preventDefault()} className="max-w-md w-full">
-            <GlassContainer
-              className="relative w-full aspect-square overflow-hidden select-none"
-              variant="gradient-purple"
-              animation="pulse"
-              interactive={true}
-              blur={30}
-            >
-              {/* Profile photo — rendered as a CSS background with an interception
-                  overlay: blocks right-click save, drag-out, and long-press callout */}
+          <div
+            onContextMenu={(e) => e.preventDefault()}
+            className="w-full max-w-md"
+          >
+            <div className="t-portrait">
               <div
                 aria-label="Portrait of the developer"
                 role="img"
@@ -123,7 +100,7 @@ export default function Hero() {
               />
               {/* transparent shield — swallows clicks/right-clicks on the photo */}
               <div className="absolute inset-0" />
-            </GlassContainer>
+            </div>
           </div>
         </motion.div>
       </motion.div>

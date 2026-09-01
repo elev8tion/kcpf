@@ -2,7 +2,40 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Chip, EASE_SHEET, IconButton } from "../traevu";
 import type { Project } from "./Projects";
+
+function CloseIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <path d="M4 4l8 8M12 4l-8 8" />
+    </svg>
+  );
+}
+
+function ChevronIcon({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      style={direction === "left" ? { transform: "scaleX(-1)" } : undefined}
+    >
+      <path d="M6 3.5 10.5 8 6 12.5" />
+    </svg>
+  );
+}
 
 export default function ProjectModal({
   project,
@@ -48,35 +81,37 @@ export default function ProjectModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
+          transition={{ duration: 0.16 }}
           onClick={onClose}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md px-4 md:px-8"
+          className="t-scrim fixed inset-0 z-50 flex items-center justify-center px-4 md:px-8"
         >
           <motion.div
             key="panel"
-            initial={{ opacity: 0, y: 40, scale: 0.96 }}
+            initial={{ opacity: 0, y: 8, scale: 0.985 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 40, scale: 0.96 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            exit={{ opacity: 0, transition: { duration: 0.16 } }}
+            transition={{ duration: 0.3, ease: [...EASE_SHEET] }}
             onClick={(e) => e.stopPropagation()}
-            className="glass relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl p-6 md:p-8"
+            className="t-dialog relative w-full max-w-4xl max-h-[90vh] overflow-y-auto p-6"
           >
-            <button
+            <IconButton
+              label="Close"
               onClick={onClose}
-              aria-label="Close"
-              className="absolute top-4 right-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white/70 transition-colors hover:bg-white/20 hover:text-white"
+              className="absolute right-3 top-3 z-10"
             >
-              ✕
-            </button>
+              <CloseIcon />
+            </IconButton>
 
-            <h3 className="text-3xl font-bold text-white mb-2">
+            <h3 className="text-[20px] leading-8 tracking-[-0.6px]">
               {project.title}
             </h3>
-            <p className="text-white/70 mb-5 max-w-2xl">{project.description}</p>
+            <p className="mb-5 mt-1 max-w-2xl text-[13px] leading-[20px] text-brand-muted">
+              {project.description}
+            </p>
 
             {/* Video demo */}
             {project.video ? (
-              <div className="mb-6 overflow-hidden rounded-xl border border-white/10 bg-black">
+              <div className="mb-6 overflow-hidden rounded-md border-[0.5px] border-[color:var(--border)] bg-brand-wall">
                 <video
                   src={project.video}
                   autoPlay
@@ -84,13 +119,13 @@ export default function ProjectModal({
                   muted
                   playsInline
                   controls
-                  className="w-full max-h-[55vh]"
+                  className="max-h-[55vh] w-full"
                 />
               </div>
             ) : (
               <>
                 {/* Gallery */}
-                <div className="relative mb-3 overflow-hidden rounded-xl border border-white/10 bg-black/40">
+                <div className="relative mb-3 overflow-hidden rounded-md border-[0.5px] border-[color:var(--border)] bg-brand-wall">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={project.gallery[active]}
@@ -100,76 +135,70 @@ export default function ProjectModal({
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.3 }}
-                      className="w-full object-contain max-h-[55vh]"
+                      className="max-h-[55vh] w-full object-contain"
                     />
                   </AnimatePresence>
 
                   {galleryLength > 1 && (
                     <>
-                      <button
-                        aria-label="Previous screenshot"
+                      <IconButton
+                        label="Previous screenshot"
                         onClick={() =>
                           setActive((i) => (i - 1 + galleryLength) % galleryLength)
                         }
-                        className="absolute left-3 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white/80 transition-colors hover:bg-black/80 hover:text-white"
+                        className="t-iconbtn--lg absolute left-3 top-1/2 -translate-y-1/2"
                       >
-                        ‹
-                      </button>
-                      <button
-                        aria-label="Next screenshot"
+                        <ChevronIcon direction="left" />
+                      </IconButton>
+                      <IconButton
+                        label="Next screenshot"
                         onClick={() => setActive((i) => (i + 1) % galleryLength)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white/80 transition-colors hover:bg-black/80 hover:text-white"
+                        className="t-iconbtn--lg absolute right-3 top-1/2 -translate-y-1/2"
                       >
-                        ›
-                      </button>
+                        <ChevronIcon direction="right" />
+                      </IconButton>
                     </>
                   )}
                 </div>
 
-                {/* Thumbnails */}
                 {galleryLength > 1 && (
-                  <div className="mb-6 flex gap-2">
-                    {project.gallery.map((src, i) => (
-                      <button
-                        key={src}
-                        onClick={() => setActive(i)}
-                        aria-label={`Screenshot ${i + 1}`}
-                        className={`h-14 w-24 overflow-hidden rounded-lg border transition-all ${
-                          i === active
-                            ? "border-indigo-400 opacity-100"
-                            : "border-white/10 opacity-50 hover:opacity-80"
-                        }`}
-                      >
-                        <img
-                          src={src}
-                          alt=""
-                          className="h-full w-full object-cover object-top"
-                        />
-                      </button>
-                    ))}
+                  <div className="mb-6 flex items-center gap-2">
+                    <div className="flex gap-2">
+                      {project.gallery.map((src, i) => (
+                        <button
+                          key={src}
+                          type="button"
+                          onClick={() => setActive(i)}
+                          aria-label={`Screenshot ${i + 1}`}
+                          className={`t-thumb ${
+                            i === active ? "t-thumb--active" : ""
+                          }`}
+                        >
+                          <img src={src} alt="" />
+                        </button>
+                      ))}
+                    </div>
+                    <span className="t-microlabel ml-auto">
+                      {active + 1} / {galleryLength}
+                    </span>
                   </div>
                 )}
               </>
             )}
 
-            <div className="flex flex-wrap gap-2 mb-5">
+            <div className="mb-5 flex flex-wrap gap-1.5">
               {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 text-xs rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/30"
-                >
-                  {tag}
-                </span>
+                <Chip key={tag}>{tag}</Chip>
               ))}
             </div>
 
-            <ul className="grid md:grid-cols-2 gap-x-6 gap-y-2 mb-6">
+            <ul className="mb-6 grid gap-x-6 gap-y-2 md:grid-cols-2">
               {project.features.map((feature) => (
                 <li
                   key={feature}
-                  className="flex items-center gap-2 text-sm text-white/70"
+                  className="flex items-center gap-2 text-[12px] leading-[20px] text-brand-muted"
                 >
-                  <span className="text-indigo-400">✓</span>
+                  <span className="t-statusdot" aria-hidden="true" />
                   {feature}
                 </li>
               ))}
@@ -180,9 +209,10 @@ export default function ProjectModal({
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-indigo-500/20 px-5 py-2 text-sm font-medium text-indigo-300 border border-indigo-400/30 transition-colors hover:bg-indigo-500/30 hover:text-indigo-200"
+                className="t-btn"
               >
-                {project.linkLabel} <span aria-hidden>→</span>
+                {project.linkLabel}
+                <span aria-hidden="true">→</span>
               </a>
             )}
           </motion.div>

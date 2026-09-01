@@ -29,3 +29,6 @@ next-env.d.ts
 
 # local-only video backup (keep out of the deployed repo)
 /demos-backup
+
+# Local Netlify folder
+.netlify
