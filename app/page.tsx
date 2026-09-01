@@ -17,7 +17,7 @@ export default function Home() {
       <div aria-hidden className="warp-field-backdrop">
         <WarpFieldBackground
           variant="hyperspace"
-          speed={15.0}
+          speed={4.0}
           streakOpacity={0.85}
           tileOpacity={1.0}
           fov={75}
