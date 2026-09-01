@@ -1,0 +1,38 @@
+/* Local host styles for the Liquid Metal Button effect (ported from Traevu).
+   The authored document styles everything inside its iframe; the host only
+   needs a sized, overflow-controlled parent.
+
+   Pill integration over the animated warp backdrop follows Traevu's own
+   sanctioned pattern (`.pro-preview-liquid-metal`): size the host to the
+   pill and clip the iframe to the pill silhouette so the authored dark
+   plate hugs the control instead of floating a black rectangle over the
+   background. */
+
+.liquid-metal-button {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.liquid-metal-button__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* Pill-shaped host: the bridge sizes the authored pill to `pillWidthUnits`,
+   and the host width mirrors that mapping (units -> px via --u = 52px/516). */
+.liquid-metal-button--pill {
+  height: 52px;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.liquid-metal-button--pill .liquid-metal-button__frame {
+  border-radius: 999px;
+  clip-path: inset(0 round 999px);
+}

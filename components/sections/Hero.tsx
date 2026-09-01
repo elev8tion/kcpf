@@ -1,23 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Button, EASE_OUT } from "../traevu";
-
-function ArrowRightIcon() {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" />
-    </svg>
-  );
-}
+import { EASE_OUT } from "../traevu";
+import { LiquidMetalPillButton } from "../effects/liquid-metal-button/LiquidMetalPillButton";
 
 export default function Hero() {
   return (
@@ -48,29 +33,23 @@ export default function Hero() {
             architecture.
           </p>
 
-          <div className="flex gap-3 pt-2">
-            <Button
-              variant="primary"
-              size="lg"
-              icon={<ArrowRightIcon />}
+          <div className="flex flex-wrap items-center gap-3 pt-2">
+            <LiquidMetalPillButton
+              text="View Projects"
               onClick={() =>
                 document
                   .getElementById("projects")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-            >
-              View Projects
-            </Button>
-            <Button
-              size="lg"
+            />
+            <LiquidMetalPillButton
+              text="Contact Me"
               onClick={() =>
                 document
                   .getElementById("contact")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-            >
-              Contact Me
-            </Button>
+            />
           </div>
         </div>
 
