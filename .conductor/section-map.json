@@ -1,0 +1,20 @@
+{
+  "framework": "Next.js 16 (App Router) + TypeScript 5 + Tailwind CSS 3.4 + Framer Motion 11",
+  "root": ".",
+  "sections": {
+    "data": ["none"],
+    "logic": ["none"],
+    "routes": ["app/layout.tsx", "app/page.tsx"],
+    "interface": ["app/globals.css", "components/**", "styles/**", "public/**"],
+    "tests": ["none"],
+    "config": ["package.json", "package-lock.json", "next.config.mjs", "postcss.config.mjs", "tailwind.config.ts", "tsconfig.json", "next-env.d.ts"],
+    "docs": ["README.md"]
+  },
+  "notes": [
+    "Next.js App Router mixes sections in app/: app/page.tsx and app/layout.tsx define the route tree ('/' only, no app/api/**), so they are assigned to routes; their rendered content and app/globals.css are covered by interface globs.",
+    "Static portfolio with no models, schemas, ORM, or local storage — data is ['none'].",
+    "No services, state management, or utils beyond inline component logic — logic is ['none'].",
+    "No test files or test config anywhere in the tree — tests is ['none'].",
+    "public/images is currently empty; kept under interface (static assets)."
+  ]
+}
