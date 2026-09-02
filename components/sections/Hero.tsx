@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { EASE_OUT } from "../traevu";
-import { LiquidMetalPillButton } from "../effects/liquid-metal-button/LiquidMetalPillButton";
 
 export default function Hero() {
   return (
@@ -34,22 +33,13 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
-            <LiquidMetalPillButton
-              text="View Projects"
-              onClick={() =>
-                document
-                  .getElementById("projects")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-            />
-            <LiquidMetalPillButton
-              text="Contact Me"
-              onClick={() =>
-                document
-                  .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-            />
+            <a href="#projects" className="hero-cta hero-cta--primary">
+              <span>View Projects</span>
+              <span aria-hidden="true">→</span>
+            </a>
+            <a href="#contact" className="hero-cta hero-cta--secondary">
+              <span>Contact Me</span>
+            </a>
           </div>
         </div>
 
