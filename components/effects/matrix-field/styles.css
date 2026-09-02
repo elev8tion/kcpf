@@ -1,0 +1,48 @@
+/* Local host styles for the Laser Matrix Field effect.
+   The renderer itself remains inside the sandboxed, authored srcDoc. */
+
+.matrix-field-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: var(--page);
+}
+
+.matrix-field-root {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #000000;
+}
+
+.matrix-field-root > iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000000;
+}
+
+.traevu-background.laser-variant {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #020305;
+}
+
+.traevu-background.laser-variant > canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.matrix-field-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12), transparent 48%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.62));
+}

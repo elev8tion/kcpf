@@ -1,4 +1,4 @@
-import { WarpFieldBackground } from "@/components/effects/warp-field/WarpFieldBackground";
+import { LaserCollection } from "@/components/effects/matrix-field/LaserCollection";
 import Hero from "@/components/sections/Hero";
 import Projects from "@/components/sections/Projects";
 import Skills from "@/components/sections/Skills";
@@ -13,17 +13,16 @@ const FOOTER_LINKS = [
 export default function Home() {
   return (
     <main className="relative min-h-screen w-full">
-      {/* Background — Warp Field, hyperspace variant (verified Traevu source, Three.js r128) */}
-      <div aria-hidden className="warp-field-backdrop">
-        <WarpFieldBackground
-          variant="hyperspace"
-          speed={4.0}
-          streakOpacity={0.85}
-          tileOpacity={1.0}
-          fov={75}
-          hue={22}
-          saturation={1.05}
-          brightness={1.1}
+      {/* Background — Laser Matrix Field (sandboxed authored Raw WebGL source) */}
+      <div aria-hidden className="matrix-field-backdrop">
+        <LaserCollection
+          speed={1}
+          size={1}
+          length={1}
+          opacity={0.95}
+          hue={0}
+          saturation={1}
+          brightness={1}
         />
       </div>
 
