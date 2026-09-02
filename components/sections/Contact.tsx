@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Button, EASE_OUT, Panel, SectionHeading } from "../traevu";
+import { EASE_OUT, Panel, SectionHeading } from "../traevu";
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -96,9 +96,13 @@ export default function Contact() {
               </div>
 
               <div className="pt-1">
-                <Button variant="primary" size="lg" type="submit">
-                  Send Message
-                </Button>
+                <button
+                  type="submit"
+                  className="hero-cta hero-cta--primary contact-submit"
+                >
+                  <span>Send Message</span>
+                  <span aria-hidden="true">→</span>
+                </button>
               </div>
             </form>
           </Panel>

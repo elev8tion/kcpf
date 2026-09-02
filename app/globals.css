@@ -250,6 +250,16 @@
     border-color: rgba(255, 255, 255, 0.24);
   }
 
+  .contact-submit {
+    width: 100%;
+  }
+
+  @media (min-width: 640px) {
+    .contact-submit {
+      width: auto;
+    }
+  }
+
   /* Mono chip / tag. */
   .t-chip {
     display: inline-flex;
